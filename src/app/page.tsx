@@ -96,7 +96,7 @@ export default function Home() {
   useEffect(() => {
     const updateUsers = () => {
       setLiveUsers(prev => {
-        let change = Math.floor(Math.random() * 7) - 3; // -3 bis +3
+        const change = Math.floor(Math.random() * 7) - 3; // -3 bis +3
         let next = prev + change;
         if (next < 10) next = 10;
         if (next > 200) next = 200;
