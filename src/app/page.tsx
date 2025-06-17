@@ -65,15 +65,14 @@ function SoundWave({ className = "", size = "lg" }: { className?: string; size?:
 }
 
 export default function Home() {
-  // State für Modal und E-Mail
+  // State für Modal
   const [modalOpen, setModalOpen] = useState(false);
-  const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
-  // Countdown zum Launch (1. September 2025)
+  // Countdown zum Launch (10. Juli 2024)
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   useEffect(() => {
-    const launchDate = new Date("2025-09-01T00:00:00");
+    const launchDate = new Date("2024-07-10T00:00:00");
     const timer = setInterval(() => {
       const now = new Date();
       const diff = launchDate.getTime() - now.getTime();
@@ -92,33 +91,32 @@ export default function Home() {
     return () => clearInterval(timer);
   }, []);
 
-  // Animierter Zähler für Live-Lernanzeige
-  const [learners, setLearners] = useState(0);
+  // Live User Logik
+  const [liveUsers, setLiveUsers] = useState(50);
   useEffect(() => {
-    let current = 0;
-    const target = 128;
-    const step = Math.ceil(target / 30);
-    const interval = setInterval(() => {
-      current += step;
-      if (current >= target) {
-        setLearners(target);
-        clearInterval(interval);
-      } else {
-        setLearners(current);
-      }
-    }, 50);
+    const updateUsers = () => {
+      setLiveUsers(prev => {
+        let change = Math.floor(Math.random() * 7) - 3; // -3 bis +3
+        let next = prev + change;
+        if (next < 10) next = 10;
+        if (next > 200) next = 200;
+        return next;
+      });
+    };
+    updateUsers();
+    const interval = setInterval(updateUsers, 30 * 60 * 1000); // alle 30 Minuten
     return () => clearInterval(interval);
   }, []);
 
   // Modal Handler
   const openModal = () => {
     setModalOpen(true);
-    setEmail("");
     setSubmitted(false);
   };
   const closeModal = () => setModalOpen(false);
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+
+  // Nach dem Submit auf submitted setzen
+  const handleFormSubmit = () => {
     setSubmitted(true);
   };
 
@@ -223,9 +221,9 @@ export default function Home() {
         </Reveal>
         <Reveal effect="fade-in-up">
           <GlassCard className="flex flex-col items-center justify-center text-center py-8 bg-white">
-            <div className="text-lg font-semibold text-[#338ae9] mb-2">Studierende lernen gerade mit UniPod</div>
-            <div className="text-5xl font-extrabold text-[#338ae9] drop-shadow-lg mb-2 animate-pulse">{learners}</div>
-            <div className="text-xs text-[#338ae9]/50">(Live-Demo)</div>
+            <div className="text-lg font-semibold text-[#338ae9] mb-2">Live User</div>
+            <div className="text-5xl font-extrabold text-[#338ae9] drop-shadow-lg mb-2 animate-pulse">{liveUsers}</div>
+            <div className="text-xs text-[#338ae9]/50">(Live-Zahl, alle 30min aktualisiert)</div>
           </GlassCard>
         </Reveal>
       </section>
@@ -256,13 +254,17 @@ export default function Home() {
             </button>
             <div className="flex flex-col items-center">
               <div className="text-2xl font-bold mb-2 text-[#338ae9] text-center">Warteliste voll</div>
-              <p className="mb-4 text-[#338ae9]/90 text-center">Momentan ist unsere Warteliste voll.<br/>Trag dich hier ein und wir informieren dich, sobald ein Platz frei wird.</p>
+              <p className="mb-4 text-[#338ae9]/90 text-center">Leider sind alle Early Access Plätze bereits belegt.<br/>Schreib dich jedoch auf die Warteliste und lass dich informieren, sobald ein Platz frei wird.</p>
               {!submitted ? (
-                <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full mt-2">
+                <form
+                  action="https://formspree.io/f/mgvyzaby"
+                  method="POST"
+                  className="flex flex-col gap-4 w-full mt-2"
+                  onSubmit={handleFormSubmit}
+                >
                   <input
                     type="email"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
+                    name="email"
                     placeholder="Deine E-Mail-Adresse"
                     required
                     className="px-4 py-3 rounded-full border border-[#338ae9]/20 focus:outline-none focus:ring-2 focus:ring-[#338ae9]"
