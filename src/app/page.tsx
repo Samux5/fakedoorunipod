@@ -152,7 +152,7 @@ export default function Home() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [launchDate]);
 
   // Animierter Zähler für Live-Lernanzeige
   const [learners, setLearners] = useState(0);
