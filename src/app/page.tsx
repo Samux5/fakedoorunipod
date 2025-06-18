@@ -69,10 +69,10 @@ export default function Home() {
   const [modalOpen, setModalOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  // Countdown zum Launch (10. Juli 2024)
+  // Countdown zum Launch (10. Juli 2025)
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   useEffect(() => {
-    const launchDate = new Date("2024-07-10T00:00:00");
+    const launchDate = new Date("2025-07-10T00:00:00");
     const timer = setInterval(() => {
       const now = new Date();
       const diff = launchDate.getTime() - now.getTime();
@@ -88,6 +88,22 @@ export default function Home() {
         seconds: Math.floor((diff / 1000) % 60)
       });
     }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Prüfungswoche-Countdown
+  const [examCountdown, setExamCountdown] = useState({ days: 0 });
+  useEffect(() => {
+    const examDate = new Date("2025-06-23T00:00:00");
+    const updateExamCountdown = () => {
+      const now = new Date();
+      const diff = examDate.getTime() - now.getTime();
+      setExamCountdown({
+        days: Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24)))
+      });
+    };
+    updateExamCountdown();
+    const timer = setInterval(updateExamCountdown, 1000 * 60 * 60); // Update hourly
     return () => clearInterval(timer);
   }, []);
 
@@ -216,14 +232,13 @@ export default function Home() {
         <Reveal effect="fade-in-up">
           <GlassCard className="flex flex-col items-center justify-center text-center py-8 bg-white">
             <div className="text-lg font-semibold text-[#338ae9] mb-2">Nächste Prüfungswoche beginnt in:</div>
-            <div className="text-5xl font-extrabold text-[#338ae9] drop-shadow-lg mb-2">{countdown.days} Tage</div>
+            <div className="text-5xl font-extrabold text-[#338ae9] drop-shadow-lg mb-2">{examCountdown.days} Tage</div>
           </GlassCard>
         </Reveal>
         <Reveal effect="fade-in-up">
           <GlassCard className="flex flex-col items-center justify-center text-center py-8 bg-white">
             <div className="text-lg font-semibold text-[#338ae9] mb-2">Live User</div>
             <div className="text-5xl font-extrabold text-[#338ae9] drop-shadow-lg mb-2 animate-pulse">{liveUsers}</div>
-            <div className="text-xs text-[#338ae9]/50">(Live-Zahl, alle 30min aktualisiert)</div>
           </GlassCard>
         </Reveal>
       </section>
@@ -282,10 +297,6 @@ export default function Home() {
       )}
       {/* Footer without backdrop */}
       <footer className="w-full mt-20 py-10 flex flex-col items-center gap-4 border-t border-[#338ae9]/10">
-        <div className="flex gap-6 mb-2">
-          <a href="#" className="text-[#338ae9]/50 hover:text-[#338ae9] transition-colors">Datenschutz</a>
-          <a href="#" className="text-[#338ae9]/50 hover:text-[#338ae9] transition-colors">Impressum</a>
-        </div>
         <div className="flex gap-4 mb-2">
           <a href="#" className="p-2 rounded-full border border-[#338ae9]/30 hover:border-[#338ae9] transition-colors">
             <svg width="20" height="20" fill="none" stroke="#338ae9" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
