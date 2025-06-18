@@ -268,7 +268,7 @@ export default function Home() {
               ×
             </button>
             <div className="flex flex-col items-center">
-              <div className="text-2xl font-bold mb-2 text-[#338ae9] text-center">Warteliste voll</div>
+              <div className="text-2xl font-bold mb-2 text-[#338ae9] text-center">Alle Early Access Plätze sind belegt</div>
               <p className="mb-4 text-[#338ae9]/90 text-center">Leider sind alle Early Access Plätze bereits belegt.<br/>Schreib dich jedoch auf die Warteliste und lass dich informieren, sobald ein Platz frei wird.</p>
               {!submitted ? (
                 <form
