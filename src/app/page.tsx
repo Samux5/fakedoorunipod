@@ -275,7 +275,21 @@ export default function Home() {
                   action="https://formspree.io/f/mgvyzaby"
                   method="POST"
                   className="flex flex-col gap-4 w-full mt-2"
-                  onSubmit={handleFormSubmit}
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const form = e.target as HTMLFormElement;
+                    fetch(form.action, {
+                      method: 'POST',
+                      body: new FormData(form),
+                      headers: {
+                        'Accept': 'application/json'
+                      }
+                    }).then(response => {
+                      if (response.ok) {
+                        handleFormSubmit();
+                      }
+                    });
+                  }}
                 >
                   <input
                     type="email"
