@@ -167,7 +167,7 @@ export default function Home() {
       <section className="relative min-h-[80vh] flex flex-col justify-center items-center text-center px-4 pt-12 pb-24 md:pb-32">
         <div className="relative z-10 flex flex-col items-center gap-8 max-w-2xl mx-auto">
           <Reveal effect="fade-in-up">
-            <h1 className="text-2xl md:text-4xl font-bold text-[#338ae9] hover:scale-[1.02] transition-transform duration-500">
+            <h1 className="text-4xl md:text-6xl font-bold text-[#338ae9] hover:scale-[1.02] transition-transform duration-500">
               Vorlesungen neu gedacht &ndash; jetzt als Podcast.
             </h1>
             <p className="text-lg md:text-xl text-[#338ae9]/90 mt-2 hover:text-[#338ae9] transition-colors duration-300">
@@ -188,12 +188,12 @@ export default function Home() {
               </div>
             </div>
             <button
-              className="mt-4 bg-[#338ae9] text-white px-8 py-4 rounded-full font-semibold text-lg shadow-xl hover:scale-105 hover:bg-[#338ae9]/90 transition-all duration-300"
+              className="mt-4 bg-[#2563eb] text-white px-8 py-4 rounded-full font-semibold text-lg shadow-xl hover:scale-105 hover:bg-[#1d4ed8] transition-all duration-300"
               onClick={openModal}
             >
               Jetzt Zugang sichern
             </button>
-            <div className="text-sm text-[#338ae9]/80 mt-2">Sei unter den Ersten, die UniPod testen dürfen.</div>
+            <div className="text-sm text-[#338ae9]/80 mt-2">Teste UniPod vor allen anderen &ndash; sichere dir jetzt den Early Access!</div>
           </Reveal>
         </div>
       </section>
